@@ -10,7 +10,7 @@
 # - Dice Roll/Coin flip/Random number
 
 PlayerScores = dict() #{"Name", Score]}
-Commands = [("'e'", "Save and Exit the Game"),
+Commands = [("'e'", "Exit the Game"),
             ("'h'", "Display Help Menu"),
             ("'l'", "Display List of Player Names"),
             ("'a PlayerName [Starting Score]'", "Add a Player with optional Starting Score"),
