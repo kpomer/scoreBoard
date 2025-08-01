@@ -18,7 +18,9 @@ Commands = [("'e'", "Save and Exit the Game"),
             ("'n'", "New Game")]
 
 ErrorMessages = {"InvalidCommand": "Invalid Command: '{p1}'.  Please try again or run 'h' for a list of Help Options",
-                 "InvalidNumArgs": "Invalid Number of Arguments for command '{p1}'.  Expected {p2} and received {p3}"}
+                 "InvalidNumArgs": "Invalid Number of Arguments for command '{p1}'.  Expected {p2} and received {p3}",
+                 "InvalidPlayerName": "Cannot Add new Player '{p1}' because this name is invalid",
+                 "PlayerAlreadyExists": "Cannot Add new Player '{p1}' because another player with this name already exists."}
 
 
 def main():
@@ -51,12 +53,20 @@ def AddUser(commandInput):
     #Validations
     if(len(commandComponents) != 2):
         ReturnError("InvalidNumArgs", [commandComponents[0], 2, len(commandComponents)])
+    elif(commandComponents[1] == ""):
+        ReturnError("InvalidPlayerName", [commandComponents[1]])
+    elif(commandComponents[1] in PlayerScores):
+        ReturnError("PlayerAlreadyExists", [commandComponents[1]])
+    else:
+        PlayerScores[commandComponents[1]] = 0
+        print(f"Player '{commandComponents[1]}' has been added!")
+    
 
 
 def ReturnError(msgKey, parameters):
     if(msgKey not in ErrorMessages):
         print("\nInternal error")
-        raise Exception("No ErrorMessage exists with the key '{msgKey}'")
+        raise Exception(f"No ErrorMessage exists with the key '{msgKey}'")
     elif(len(parameters) == 0):
         print(ErrorMessages[msgKey])
     else:
