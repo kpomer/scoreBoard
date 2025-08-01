@@ -1,3 +1,8 @@
+# Program-specfic files and folders
+folder_name/
+save.json
+
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[codz]

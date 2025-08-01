@@ -1,3 +1,6 @@
+import os
+import json
+
 # Game Score Tracker to keep track of all players and their scores
 
 # Features
@@ -9,11 +12,15 @@
 #Extras
 # - Dice Roll/Coin flip/Random number
 
+#TODO Implement file storage in Library rather than storing it with Program data
+SaveDirectory = "applicationData"
+SaveFile = "save.json"
+
 PlayerScores = dict() #{"Name", Score]}
 Commands = [("'e'", "Exit the Game"),
             ("'h'", "Display Help Menu"),
             ("'l'", "Display List of Player Names"),
-            ("'a PlayerName [Starting Score]'", "Add a Player with optional Starting Score"),
+            ("'a PlayerName [StartingScore]'", "Add a Player with optional Starting Score"),
             ("'r PlayerName'", "Remove a Player"),
             ("'c PlayerName ScoreChange'", "Change Score"),
             ("'s'", "Scoreboard"),
@@ -26,14 +33,21 @@ ErrorMessages = {"InvalidCommand": "\nInvalid Command: '{p1}'.  Please try again
                  "PlayerNotExists": "\nCannot remove player '{p1}' because no player exists with this name."}
 
 
+
 def main():
     
+    InitializeSaveData()
+
     userInput = ""
     while (True):
         userInput = input("\nEnter a command: ")
         
         if(userInput == "e"):
             # End Game
+            saveGame = input("\nWould you like to save the game? (y/n): ")
+            if(saveGame == "y"):
+                SaveData()
+
             print("\nGame Over")
             #TODO Add Saving Functionality
             break
@@ -167,8 +181,36 @@ def ReturnError(msgKey, parameters):
 
         print(ErrorMessages[msgKey].format_map(parameterDict))
 
+def InitializeSaveData():
+
+    global PlayerScores # Updating global PlayerScores data
+
+    saveFilePath = os.path.join(os.path.dirname(os.path.abspath(__file__)), SaveDirectory, SaveFile)
+    if os.path.exists(saveFilePath):
+        try:
+            with open(saveFilePath, 'r') as f:
+                loaded_data = json.load(f)
+                print("\nInitialized Saved Game Data!")
+                PlayerScores = loaded_data
+                
+        except (IOError, json.JSONDecodeError) as e:
+            print(f"Error loading saved data: {e}")
+            PlayerScores =  {}
+    else:
+        print("No saved game file found. Initializing with empty data.")
+        PlayerScores =  {}
 
 
+def SaveData():
+    saveFileDir = os.path.join(os.path.dirname(os.path.abspath(__file__)), SaveDirectory)
+    saveFilePath = os.path.join(saveFileDir, SaveFile)
 
+    try:
+        os.makedirs(saveFileDir, exist_ok=True)
+        with open(saveFilePath, 'w') as f:
+            json.dump(PlayerScores, f, indent=4)
+        print(f"\nGame saved successfully to {saveFilePath}")
+    except IOError as e:
+        print(f"Error saving game file: {e}")
 
 main()
