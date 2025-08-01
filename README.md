@@ -12,7 +12,7 @@ Console game with the following allowed commands:
 
 - `l` - Display List of Player Names
 
-- `a PlayerName [Starting Score]` - Add a Player with optional Starting Score (default 0)
+- `a PlayerName [StartingScore]` - Add a Player with optional Starting Score (default 0)
 
 - `r PlayerName` - Remove a Player
 
