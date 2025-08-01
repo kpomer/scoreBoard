@@ -24,7 +24,7 @@ Console game with the following allowed commands:
 
 ### Future Functionality
 
-- [ ] Game Saving
+- [ ] Game Saving, build out and update to store separate from Program files
 - [ ] Multi-game support (open from a list)
 - [ ] Allow for games to end at a specific threshold (ex. first person to 500 pts)
 - [ ] Useful game tools (ex. coin flip, dice roll, etc...)
