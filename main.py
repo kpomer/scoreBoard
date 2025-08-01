@@ -19,11 +19,11 @@ Commands = [("'e'", "Save and Exit the Game"),
             ("'s'", "Scoreboard"),
             ("'n'", "New Game - set scores back to 0")]
 
-ErrorMessages = {"InvalidCommand": "Invalid Command: '{p1}'.  Please try again or run 'h' for a list of Help Options",
-                 "InvalidNumArgs": "Invalid Number of Arguments for command '{p1}'.  Expected {p2} and received {p3}",
-                 "InvalidValue": "Invalid {p1} value: '{p2}'",
-                 "PlayerAlreadyExists": "Cannot Add new Player '{p1}' because another player with this name already exists.",
-                 "PlayerNotExists": "Cannot Remove Player '{p1}' because no Player exists with this name."}
+ErrorMessages = {"InvalidCommand": "\nInvalid Command: '{p1}'.  Please try again or run 'h' for a list of Help Options",
+                 "InvalidNumArgs": "\nInvalid number of arguments for command '{p1}'.  Expected {p2} and received {p3}",
+                 "InvalidValue": "\nInvalid {p1} value: '{p2}'",
+                 "PlayerAlreadyExists": "\nCannot add new player '{p1}' because another player with this name already exists.",
+                 "PlayerNotExists": "\nCannot remove player '{p1}' because no player exists with this name."}
 
 
 def main():
@@ -34,7 +34,7 @@ def main():
         
         if(userInput == "e"):
             # End Game
-            print("\nGame Ended")
+            print("\nGame Over")
             #TODO Add Saving Functionality
             break
         elif(userInput == "h"):
@@ -68,7 +68,7 @@ def DisplayHelpOptions():
 
 def ListPlayers():
     if(len(PlayerScores) == 0):
-        print("\nNo Players have been added")
+        print("\nNo players have been added")
         return 0
 
     print("\nPlayers:")
@@ -94,7 +94,7 @@ def AddPlayer(commandInput):
             score = int(commandComponents[2])
 
         PlayerScores[commandComponents[1]] = score
-        print(f"Player '{commandComponents[1]}' has been added with a current score of {PlayerScores[commandComponents[1]]}!")
+        print(f"\nPlayer '{commandComponents[1]}' has been added with a current score of {PlayerScores[commandComponents[1]]}!")
 
 def RemovePlayer(commandInput):
     commandComponents = commandInput.split(" ")
@@ -108,7 +108,7 @@ def RemovePlayer(commandInput):
     else:
         #Remove Player
         PlayerScores.pop(commandComponents[1])
-        print(f"Player '{commandComponents[1]}' has been removed!")
+        print(f"\nPlayer '{commandComponents[1]}' has been removed!")
 
 def ChangeScore(commandInput):
     commandComponents = commandInput.split(" ")
@@ -125,7 +125,7 @@ def ChangeScore(commandInput):
         #Change Points
         previousPoints = PlayerScores[commandComponents[1]]
         PlayerScores[commandComponents[1]] = previousPoints + int(commandComponents[2])
-        print(f"Score for '{commandComponents[1]}' has been updated!  New score is {PlayerScores[commandComponents[1]]}")
+        print(f"\nScore for '{commandComponents[1]}' has been updated!  New score is {PlayerScores[commandComponents[1]]}")
 
 def DisplayScoreboard():
     if(len(PlayerScores) == 0):
@@ -142,8 +142,7 @@ def DisplayScoreboard():
         print(f"{place} - {sorted_scores[s][0]} ({sorted_scores[s][1]})")    
 
 def NewGame():
-    print("\n'New Game' has been selected")
-    yn_NewGame = input("\nAre you sure?  Run 'y' to continue, otherwise press enter: ")
+    yn_NewGame = input("\nAre you sure? All unsaved progress will be lost.\n\nTo start a new game run the 'y' command.\nTo continue your current game, press 'Enter': ")
     if(yn_NewGame == "y"):
         print("\nNew Game Started!\nAll player scores have been reset to 0")
         for k in PlayerScores.keys():
