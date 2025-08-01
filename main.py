@@ -12,9 +12,10 @@
 PlayerScores = dict() #{"Name", Score]}
 Commands = [("'e'", "Save and Exit the Game"),
             ("'h'", "Display Help Menu"),
-            ("'a [playerName]'", "Add a Player"),
-            ("'r [playerName]'", "Remove a Player"),
-            ("'c [playerName] [playerName] [scoreChange]'", "Change Score"),
+            ("'l'", "Display List of Player Names"),
+            ("'a PlayerName [Starting Score]'", "Add a Player with optional Starting Score"),
+            ("'r PlayerName'", "Remove a Player"),
+            ("'c PlayerName ScoreChange'", "Change Score"),
             ("'s'", "Scoreboard"),
             ("'n'", "New Game - set scores back to 0")]
 
@@ -39,6 +40,9 @@ def main():
         elif(userInput == "h"):
             # Help Options
             DisplayHelpOptions()
+        elif(userInput == "l"):
+            # List Player Names
+            ListPlayers()
         elif(userInput.split(" ")[0] == "a"):
             # Add Player
             AddPlayer(userInput)
@@ -61,6 +65,16 @@ def DisplayHelpOptions():
     print("\nHelp Options:")
     for c in Commands:
         print(c[0] + ": " + c[1])
+
+def ListPlayers():
+    if(len(PlayerScores) == 0):
+        print("\nNo Players have been added")
+        return 0
+
+    print("\nPlayers:")
+    for p in PlayerScores.keys():
+        print(f"- {p}")
+
 
 def AddPlayer(commandInput):
     commandComponents = commandInput.split(" ")
